@@ -10,11 +10,14 @@ const shimmer = keyframes`
   }
 `;
 
-export const StyledSkeleton = styled.div<SkeletonPropsType>`
+export const StyledSkeleton = styled.div.attrs<SkeletonPropsType>(props => ({
+  style: {
+    width: `${props.$width}px`,
+    height: `${props.$height}px`,
+  },
+}))`
   background-color: #e0e0e0;
   border-radius: 8px;
-  width: ${props => `${props.width || 100}px`};
-  height: ${props => `${props.height || 100}px`};
   overflow: hidden;
   position: relative;
 

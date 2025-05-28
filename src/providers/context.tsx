@@ -12,7 +12,9 @@ export const StoreProvider: React.FC<{
   const cache = useRef<Record<number, string>>({});
   const { count, width } = useColumnCountAndWidth();
   const [photos, setPhotos] = useState<IPhoto[]>(
-    new Array(80).fill({ width: 200, height: 300, src: { medium: '' } })
+    new Array(80)
+      .fill({ width: 200, height: 300, src: { medium: '' } })
+      .map((item, i) => ({ ...item, id: i }))
   );
 
   const addToCache = useCallback((key: number, value: string) => {
@@ -26,7 +28,7 @@ export const StoreProvider: React.FC<{
       },
     })
       .then(res => res.json())
-      .then(data => setPhotos(data.photos));
+      .then((data: { photos: IPhoto[] }) => setPhotos(data.photos));
   }, []);
 
   return (

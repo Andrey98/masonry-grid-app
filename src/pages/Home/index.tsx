@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <>
-      <StyledMain padding={PADDING}>
+      <StyledMain $padding={PADDING}>
         <StyledHeader>Masonry Grid</StyledHeader>
         <VirtualMasonryGrid photos={photos} />
       </StyledMain>

@@ -6,7 +6,7 @@ import { GAP } from '../../constants';
 
 import { type IPhoto } from '../../types';
 
-import { StyledColumn, StyledColumns } from './styled';
+import { StyledColumn, StyledColumns } from './styles';
 
 type VirtualMasonryGridPropsType = {
   photos: IPhoto[];
@@ -20,9 +20,9 @@ export const VirtualMasonryGrid: React.FC<VirtualMasonryGridPropsType> = ({ phot
   }, [photos, columnCount]);
 
   return (
-    <StyledColumns gap={GAP}>
+    <StyledColumns $gap={GAP}>
       {columns.map((col, i) => (
-        <StyledColumn key={i} gap={GAP}>
+        <StyledColumn key={i} $gap={GAP}>
           {col.map(photo => (
             <Photo key={photo.id} photo={photo} />
           ))}

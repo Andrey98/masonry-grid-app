@@ -1,4 +1,5 @@
 import { useEffect, useState, type FC } from 'react';
+import { NavLink } from 'react-router';
 import { useVisibility } from '../../hooks/useVisibility';
 import { useImageHeight } from '../../hooks/useImageHeight';
 import Skeleton from '../Skeleton';
@@ -6,7 +7,7 @@ import { useStore } from '../../providers/context';
 
 import type { IPhoto } from '../../types';
 
-import { StyledImage, StyledImageWrapper } from './styled';
+import { StyledImage, StyledImageWrapper } from './styles';
 
 const Photo: FC<{
   photo: IPhoto;
@@ -71,19 +72,21 @@ const Photo: FC<{
   }, [photo.src.medium, photo.src.original, imageSrc, visible, photo.id, cache, addToCache]);
 
   return (
-    <StyledImageWrapper ref={ref} height={height}>
-      {error ? (
-        <p>{error}</p>
-      ) : (
-        <>
-          {visible && !isLoading && imageSrc ? (
-            <StyledImage src={imageSrc} alt={photo.alt} />
-          ) : (
-            <Skeleton width={width} height={height} className={visible ? 'animate' : ''} />
-          )}
-        </>
-      )}
-    </StyledImageWrapper>
+    <NavLink to={`/photo/${photo.id}`}>
+      <StyledImageWrapper ref={ref} $height={height}>
+        {error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+            {visible && !isLoading && imageSrc ? (
+              <StyledImage src={imageSrc} alt={photo.alt} />
+            ) : (
+              <Skeleton $width={width} $height={height} className={visible ? 'animate' : ''} />
+            )}
+          </>
+        )}
+      </StyledImageWrapper>
+    </NavLink>
   );
 };
 

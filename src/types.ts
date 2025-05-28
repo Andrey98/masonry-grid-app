@@ -2,6 +2,7 @@ export interface IPhoto {
   id: number;
   alt: string;
   photographer: string;
+  photographer_url: string;
   src: {
     small: string;
     medium: string;
