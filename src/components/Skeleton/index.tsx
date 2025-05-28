@@ -3,8 +3,8 @@ import type { FC } from 'react';
 import { StyledSkeleton } from './styles';
 
 export type SkeletonPropsType = {
-  $width: number;
-  $height: number;
+  $width?: number;
+  $height?: number;
   className?: string;
 };
 

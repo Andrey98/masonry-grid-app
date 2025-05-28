@@ -12,8 +12,8 @@ const shimmer = keyframes`
 
 export const StyledSkeleton = styled.div.attrs<SkeletonPropsType>(props => ({
   style: {
-    width: `${props.$width}px`,
-    height: `${props.$height}px`,
+    ...(props.$width ? { width: `${props.$width}px` } : {}),
+    ...(props.$height ? { height: `${props.$height}px` } : {}),
   },
 }))`
   background-color: #e0e0e0;

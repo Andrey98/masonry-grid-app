@@ -95,7 +95,7 @@ export default function PhotoPage() {
             {imageSrc ? (
               <StyledLargePhoto src={imageSrc} alt={photo?.alt || ''} />
             ) : (
-              <StyledSkeletonForPhotoPage className="animate" $width={200} $height={300} />
+              <StyledSkeletonForPhotoPage className="animate" />
             )}
           </StyledPhotoWrapper>
           <StyledPhotoInfo>
