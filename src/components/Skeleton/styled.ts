@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import type { SkeletonPropsType } from './Skeleton';
+import type { SkeletonPropsType } from '.';
 
 const shimmer = keyframes`
   0% {
@@ -15,6 +15,8 @@ export const StyledSkeleton = styled.div<SkeletonPropsType>`
   border-radius: 8px;
   width: ${props => `${props.width || 100}px`};
   height: ${props => `${props.height || 100}px`};
+  overflow: hidden;
+  position: relative;
 
   &.animate::after {
     content: '';

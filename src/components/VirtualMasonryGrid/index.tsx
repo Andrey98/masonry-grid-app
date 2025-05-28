@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Photo from '../Photo/Photo';
+import Photo from '../Photo';
 import { splitIntoColumns } from '../../utils/splitIntoColumns';
 import { useStore } from '../../providers/context';
 import { GAP } from '../../constants';

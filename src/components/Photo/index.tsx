@@ -1,7 +1,7 @@
 import { useEffect, useState, type FC } from 'react';
 import { useVisibility } from '../../hooks/useVisibility';
 import { useImageHeight } from '../../hooks/useImageHeight';
-import Skeleton from '../Skeleton/Skeleton';
+import Skeleton from '../Skeleton';
 import { useStore } from '../../providers/context';
 
 import type { IPhoto } from '../../types';

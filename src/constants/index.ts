@@ -1,6 +1,6 @@
 export const PADDING = 32;
 export const GAP = 16;
-export const ROOT_MARGIN = '200px';
+export const ROOT_MARGIN = '20px';
 
 export const BIG_SCREEN = 1200;
 export const MEDIUM_SCREEN = 800;
