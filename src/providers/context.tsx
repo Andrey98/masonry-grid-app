@@ -15,12 +15,9 @@ export const StoreProvider: React.FC<{
     new Array(80).fill({ width: 200, height: 300, src: { medium: '' } })
   );
 
-  const addToCache = useCallback(
-    (key: number, value: string) => {
-      cache.current[key] = value;
-    },
-    [cache.current]
-  );
+  const addToCache = useCallback((key: number, value: string) => {
+    cache.current[key] = value;
+  }, []);
 
   useEffect(() => {
     fetch('https://api.pexels.com/v1/curated?per_page=80', {

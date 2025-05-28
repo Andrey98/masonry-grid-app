@@ -1,16 +1,18 @@
 import { useEffect, useState, type FC } from 'react';
-import { useVisibility } from '../hooks/useVisibility';
-import { useImageHeight } from '../hooks/useImageHeight';
-import Skeleton from './Skeleton';
+import { useVisibility } from '../../hooks/useVisibility';
+import { useImageHeight } from '../../hooks/useImageHeight';
+import Skeleton from '../Skeleton/Skeleton';
+import { useStore } from '../../providers/context';
 
-import type { IPhoto } from '../types';
-import { useStore } from '../providers/context';
+import type { IPhoto } from '../../types';
+
+import { StyledImage, StyledImageWrapper } from './styled';
 
 const Photo: FC<{
   photo: IPhoto;
 }> = ({ photo }) => {
   const { cache, addToCache } = useStore();
-  const [ref, visible] = useVisibility(0);
+  const [ref, visible] = useVisibility(0, !!cache[photo.id]);
   const { height, width } = useImageHeight(photo);
 
   const [imageSrc, setImageSrc] = useState<string | null>(cache[photo.id] || null);
@@ -53,8 +55,12 @@ const Photo: FC<{
             addToCache(photo.id, objectURL);
           }
         }
-      } catch (err: Error | any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err?.message);
+        } else {
+          setError('An unknown error occurred while fetching the image.');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -62,30 +68,22 @@ const Photo: FC<{
 
     fetchImage(false);
     fetchImage(true);
-  }, [photo.src.medium, photo.src.original, imageSrc, visible]);
+  }, [photo.src.medium, photo.src.original, imageSrc, visible, photo.id, cache, addToCache]);
 
   return (
-    <div ref={ref} style={{ height }}>
+    <StyledImageWrapper ref={ref} height={height}>
       {error ? (
         <p>{error}</p>
       ) : (
         <>
           {visible && !isLoading && imageSrc ? (
-            <img
-              src={imageSrc}
-              alt={photo.alt}
-              style={{
-                width: '100%',
-                borderRadius: '8px',
-                height: '100%',
-              }}
-            />
+            <StyledImage src={imageSrc} alt={photo.alt} />
           ) : (
             <Skeleton width={width} height={height} className={visible ? 'animate' : ''} />
           )}
         </>
       )}
-    </div>
+    </StyledImageWrapper>
   );
 };
 

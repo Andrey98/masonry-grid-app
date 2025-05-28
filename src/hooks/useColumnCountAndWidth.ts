@@ -14,7 +14,23 @@ export const useColumnCountAndWidth = () => {
   });
 
   useEffect(() => {
-    const onResize = () => setData({ count: getColumnsCount(), width: getColumnsWidth() });
+    let timeoutId: number | null = null;
+    let resizeOccurredInCooldown = false;
+
+    const onResize = () => {
+      if (timeoutId !== null) {
+        resizeOccurredInCooldown = true;
+        return;
+      }
+      setData({ count: getColumnsCount(), width: getColumnsWidth() });
+      timeoutId = setTimeout(() => {
+        if (resizeOccurredInCooldown) {
+          setData({ count: getColumnsCount(), width: getColumnsWidth() });
+        }
+        timeoutId = null;
+        resizeOccurredInCooldown = false;
+      }, 100);
+    };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);

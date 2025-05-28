@@ -1,18 +1,18 @@
-import { VirtualMasonryGrid } from './components/VirtualMasonryGrid';
+import { VirtualMasonryGrid } from './components/VirtualMasonryGrid/VirtualMasonryGrid';
 import { PADDING } from './constants';
 import { useStore } from './providers/context';
+import { GlobalStyle, StyledHeader, StyledMain } from './styled';
 
 export default function App() {
   const { photos } = useStore();
 
   return (
-    <main
-      style={{
-        padding: PADDING,
-      }}
-    >
-      <h1 style={{ textAlign: 'center', fontSize: 50, lineHeight: 1.1 }}>Masonry Grid</h1>
-      <VirtualMasonryGrid photos={photos} />
-    </main>
+    <>
+      <GlobalStyle />
+      <StyledMain padding={PADDING}>
+        <StyledHeader>Masonry Grid</StyledHeader>
+        <VirtualMasonryGrid photos={photos} />
+      </StyledMain>
+    </>
   );
 }

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ROOT_MARGIN } from '../constants';
 
-export const useVisibility = (threshold = 0) => {
-  const [visible, setVisible] = useState(false);
+export const useVisibility = (threshold = 0, isAlreadyInCache = false) => {
+  const [visible, setVisible] = useState(isAlreadyInCache);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
