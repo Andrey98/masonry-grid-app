@@ -72,7 +72,7 @@ const Photo: FC<{
   }, [photo.src.medium, photo.src.original, imageSrc, visible, photo.id, cache, addToCache]);
 
   return (
-    <NavLink to={`/photo/${photo.id}`}>
+    <NavLink to={`/photo/${photo.id}`} aria-label={photo.alt || `Photo #${photo.id}`}>
       <StyledImageWrapper ref={ref} $height={height}>
         {error ? (
           <p>{error}</p>

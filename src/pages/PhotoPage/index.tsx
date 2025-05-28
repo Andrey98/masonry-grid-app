@@ -89,7 +89,9 @@ export default function PhotoPage() {
     <>
       <ScrollRestoration />
       <StyledDetailViewContainer>
-        <StyledBackButton to={'/'}>Back to Grid</StyledBackButton>
+        <StyledBackButton to={'/'} aria-label="back">
+          Back to Grid
+        </StyledBackButton>
         <StyledPhotoAndInfoWrapper>
           <StyledPhotoWrapper>
             {imageSrc ? (
