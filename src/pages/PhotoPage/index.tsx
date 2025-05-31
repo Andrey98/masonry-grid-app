@@ -63,10 +63,12 @@ export default function PhotoPage() {
             }
           }
         } catch (err: unknown) {
-          if (err instanceof Error) {
-            setError(err?.message);
-          } else {
-            setError('An unknown error occurred while fetching the image.');
+          if (!cache[id]) {
+            if (err instanceof Error) {
+              setError(err?.message);
+            } else {
+              setError('An unknown error occurred while fetching the image.');
+            }
           }
         }
       };

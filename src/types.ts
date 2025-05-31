@@ -11,6 +11,12 @@ export interface IPhoto {
   };
   width: number;
   height: number;
+  isSkeleton?: boolean;
+}
+
+export interface IResponseData {
+  photos: IPhoto[];
+  next_page: string;
 }
 
 export type ICache = Record<string, { isOriginalSize: boolean; blob: string }>;
@@ -21,4 +27,5 @@ export interface IStore {
   photos: IPhoto[];
   cache: ICache;
   addToCache: (key: number, value: string, isOriginalSize: boolean) => void;
+  fetchNextPage: () => void;
 }

@@ -11,8 +11,9 @@ import { StyledImage, StyledImageWrapper } from './styles';
 
 const Photo: FC<{
   photo: IPhoto;
-}> = ({ photo }) => {
-  const { cache, addToCache } = useStore();
+  willTriggerNextPageFetch: boolean;
+}> = ({ photo, willTriggerNextPageFetch }) => {
+  const { cache, addToCache, fetchNextPage } = useStore();
   const [ref, visible] = useVisibility(0, !!cache[photo.id]);
   const { height, width } = useImageHeight(photo);
 
@@ -57,10 +58,12 @@ const Photo: FC<{
           }
         }
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err?.message);
-        } else {
-          setError('An unknown error occurred while fetching the image.');
+        if (!cache[photo.id]) {
+          if (err instanceof Error) {
+            setError(err?.message);
+          } else {
+            setError('An unknown error occurred while fetching the image.');
+          }
         }
       } finally {
         setIsLoading(false);
@@ -70,6 +73,12 @@ const Photo: FC<{
     fetchImage(false);
     fetchImage(true);
   }, [photo.src.medium, photo.src.original, imageSrc, visible, photo.id, cache, addToCache]);
+
+  useEffect(() => {
+    if (visible && willTriggerNextPageFetch) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, visible, willTriggerNextPageFetch]);
 
   return (
     <NavLink to={`/photo/${photo.id}`} aria-label={photo.alt || `Photo #${photo.id}`}>

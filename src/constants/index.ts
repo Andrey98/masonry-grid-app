@@ -1,3 +1,5 @@
+export const PER_PAGE = 20;
+
 export const PADDING = 32;
 export const GAP = 16;
 export const ROOT_MARGIN = '20px';

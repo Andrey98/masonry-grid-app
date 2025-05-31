@@ -23,8 +23,13 @@ export const VirtualMasonryGrid: React.FC<VirtualMasonryGridPropsType> = ({ phot
     <StyledColumns $gap={GAP}>
       {columns.map((col, i) => (
         <StyledColumn key={i} $gap={GAP}>
-          {col.map(photo => (
-            <Photo key={photo.id} photo={photo} />
+          {col.map((photo, j) => (
+            <Photo
+              key={photo.id}
+              photo={photo}
+              // This will trigger the next page fetch when the 10th last photo is visible
+              willTriggerNextPageFetch={i + columnCount * j === photos.length - 10}
+            />
           ))}
         </StyledColumn>
       ))}
