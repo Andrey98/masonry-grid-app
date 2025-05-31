@@ -14,9 +14,6 @@ const router = createBrowserRouter([
   },
   {
     path: '/photo/:id',
-    loader: async ({ params }) => {
-      return params;
-    },
     element: <PhotoPage />,
   },
   {
