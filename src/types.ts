@@ -28,4 +28,6 @@ export interface IStore {
   cache: ICache;
   addToCache: (key: number, value: string, isOriginalSize: boolean) => void;
   fetchNextPage: () => void;
+  search: string;
+  setSearch: (value: string) => void;
 }

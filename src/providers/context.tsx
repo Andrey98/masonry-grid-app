@@ -3,6 +3,7 @@ import { useColumnCountAndWidth } from '../hooks/useColumnCountAndWidth';
 import { API_KEY, PER_PAGE } from '../constants';
 
 import type { ICache, IPhoto, IResponseData, IStore } from '../types';
+import { useSearchParams } from 'react-router';
 
 const StoreContext = createContext<IStore | null>(null);
 
@@ -15,14 +16,12 @@ export const StoreProvider: React.FC<{
   // it's currently stored in a React ref variable, making it an in-memory cache tied to the component's lifecycle.
   const cache = useRef<ICache>({});
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const { count, width } = useColumnCountAndWidth();
   const [nextPage, setNextPage] = useState<string>('');
+  const [search, setSearch] = useState<string>(searchParams.get('search') || '');
   const [loading, setLoading] = useState(false);
-  const [photos, setPhotos] = useState<IPhoto[]>(
-    new Array(PER_PAGE)
-      .fill({ width: 200, height: 300, src: {}, isSkeleton: true })
-      .map((item, i) => ({ ...item, id: i }))
-  );
+  const [photos, setPhotos] = useState<IPhoto[]>([]);
 
   const addToCache = useCallback((key: number, value: string, isOriginalSize: boolean) => {
     cache.current[key] = { blob: value, isOriginalSize };
@@ -46,8 +45,18 @@ export const StoreProvider: React.FC<{
   }, [loading, nextPage]);
 
   useEffect(() => {
+    setSearchParams({ search });
     setLoading(true);
-    fetch(`https://api.pexels.com/v1/curated?per_page=${PER_PAGE}`, {
+    setPhotos(
+      new Array(PER_PAGE)
+        .fill({ width: 200, height: 300, src: {}, isSkeleton: true })
+        .map((item, i) => ({ ...item, id: i }))
+    );
+    const url = search
+      ? `https://api.pexels.com/v1/search?query=${search}&per_page=${PER_PAGE}`
+      : `https://api.pexels.com/v1/curated?per_page=${PER_PAGE}`;
+
+    fetch(url, {
       headers: {
         Authorization: API_KEY,
       },
@@ -58,7 +67,7 @@ export const StoreProvider: React.FC<{
         setNextPage(data.next_page || '');
         setLoading(false);
       });
-  }, []);
+  }, [search, setSearchParams]);
 
   return (
     <StoreContext.Provider
@@ -67,8 +76,10 @@ export const StoreProvider: React.FC<{
         columnWidth: width,
         photos,
         cache: cache.current,
+        search,
         addToCache,
         fetchNextPage,
+        setSearch,
       }}
     >
       {children}

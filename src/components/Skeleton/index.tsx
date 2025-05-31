@@ -8,8 +8,6 @@ export type SkeletonPropsType = {
   className?: string;
 };
 
-const Skeleton: FC<SkeletonPropsType> = ({ $width = 0, $height = 0, className = '' }) => (
+export const Skeleton: FC<SkeletonPropsType> = ({ $width = 0, $height = 0, className = '' }) => (
   <StyledSkeleton className={className} $width={$width} $height={$height} />
 );
-
-export default Skeleton;

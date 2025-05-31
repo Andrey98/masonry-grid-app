@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState, type FC, type MouseEventHandler } fro
 import { NavLink } from 'react-router';
 import { useVisibility } from '../../hooks/useVisibility';
 import { useImageHeight } from '../../hooks/useImageHeight';
-import Skeleton from '../Skeleton';
+import { Skeleton } from '../Skeleton';
 import { useStore } from '../../providers/context';
 
 import type { IPhoto } from '../../types';
 
 import { StyledImage, StyledImageWrapper } from './styles';
 
-const Photo: FC<{
+export const Photo: FC<{
   photo: IPhoto;
   willTriggerNextPageFetch: boolean;
 }> = ({ photo, willTriggerNextPageFetch }) => {
@@ -111,5 +111,3 @@ const Photo: FC<{
     </NavLink>
   );
 };
-
-export default Photo;

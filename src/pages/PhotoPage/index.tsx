@@ -3,6 +3,7 @@ import { useStore } from '../../providers/context';
 import { useEffect, useState } from 'react';
 import type { IPhoto } from '../../types';
 import { API_KEY } from '../../constants';
+import { Skeleton } from '../../components/Skeleton';
 import {
   StyledBackButton,
   StyledDescription,
@@ -15,9 +16,8 @@ import {
   StyledSkeletonForPhotoPage,
   StyledSkeletonsWrapper,
 } from './styles';
-import Skeleton from '../../components/Skeleton';
 
-export default function PhotoPage() {
+export const PhotoPage = () => {
   const { id } = useParams();
   const { cache, addToCache } = useStore();
 
@@ -138,4 +138,4 @@ export default function PhotoPage() {
       </StyledDetailViewContainer>
     </>
   );
-}
+};
