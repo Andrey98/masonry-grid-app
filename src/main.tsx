@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Home } from './pages/Home';
 import { PhotoPage } from './pages/PhotoPage';
-import { AppLayout } from './pages/layout.tsx';
+import { AppLayout } from './pages/layout';
 
 const router = createBrowserRouter([
   {
