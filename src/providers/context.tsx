@@ -40,8 +40,6 @@ export const StoreProvider: React.FC<{
         .then((data: IResponseData) => {
           setPhotos(prev => [...prev, ...data.photos]);
           setNextPage(data.next_page || '');
-        })
-        .finally(() => {
           setLoading(false);
         });
     }
@@ -58,8 +56,6 @@ export const StoreProvider: React.FC<{
       .then((data: IResponseData) => {
         setPhotos(data.photos);
         setNextPage(data.next_page || '');
-      })
-      .finally(() => {
         setLoading(false);
       });
   }, []);

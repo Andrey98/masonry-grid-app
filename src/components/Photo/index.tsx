@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react';
+import { useCallback, useEffect, useState, type FC, type MouseEventHandler } from 'react';
 import { NavLink } from 'react-router';
 import { useVisibility } from '../../hooks/useVisibility';
 import { useImageHeight } from '../../hooks/useImageHeight';
@@ -20,6 +20,15 @@ const Photo: FC<{
   const [imageSrc, setImageSrc] = useState<string | null>(cache[photo.id]?.blob || null);
   const [isLoading, setIsLoading] = useState(!cache[photo.id]);
   const [error, setError] = useState<string | null>(null);
+
+  const handleClick = useCallback<MouseEventHandler>(
+    event => {
+      if (photo.isSkeleton) {
+        event.preventDefault();
+      }
+    },
+    [photo.isSkeleton]
+  );
 
   useEffect(() => {
     if (imageSrc || !visible) {
@@ -81,7 +90,11 @@ const Photo: FC<{
   }, [fetchNextPage, visible, willTriggerNextPageFetch]);
 
   return (
-    <NavLink to={`/photo/${photo.id}`} aria-label={photo.alt || `Photo #${photo.id}`}>
+    <NavLink
+      to={`/photo/${photo.id}`}
+      aria-label={photo.alt || `Photo #${photo.id}`}
+      onClick={handleClick}
+    >
       <StyledImageWrapper ref={ref} $height={height}>
         {error ? (
           <p>{error}</p>

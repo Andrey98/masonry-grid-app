@@ -79,9 +79,13 @@ export default function PhotoPage() {
       }
       if (!cache[id]?.isOriginalSize) {
         fetchImage(true);
+      } else {
+        if (cache[id]?.blob !== imageSrc) {
+          setImageSrc(cache[id].blob);
+        }
       }
     })();
-  }, [addToCache, cache, id, photo]);
+  }, [addToCache, cache, id, imageSrc, photo]);
 
   if (error) {
     return <div>Error: {error}</div>;
