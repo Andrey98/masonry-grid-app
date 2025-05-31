@@ -13,10 +13,12 @@ export interface IPhoto {
   height: number;
 }
 
+export type ICache = Record<string, { isOriginalSize: boolean; blob: string }>;
+
 export interface IStore {
   columnWidth: number;
   columnCount: number;
   photos: IPhoto[];
-  cache: Record<string, string>;
-  addToCache: (key: number, value: string) => void;
+  cache: ICache;
+  addToCache: (key: number, value: string, isOriginalSize: boolean) => void;
 }

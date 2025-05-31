@@ -22,7 +22,7 @@ export default function PhotoPage() {
   const { cache, addToCache } = useStore();
 
   const [photo, setPhoto] = useState<IPhoto | null>(null);
-  const [imageSrc, setImageSrc] = useState<string | null>(cache[id || ''] || null);
+  const [imageSrc, setImageSrc] = useState<string | null>(cache[id || '']?.blob || null);
   const [error, setError] = useState<string | null>(id ? null : 'Wrong photo ID');
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function PhotoPage() {
           } else {
             if (isOriginal || !cache[id]) {
               setImageSrc(objectURL);
-              addToCache(Number(id), objectURL);
+              addToCache(Number(id), objectURL, isOriginal);
             }
           }
         } catch (err: unknown) {
@@ -75,7 +75,9 @@ export default function PhotoPage() {
       if (!cache[id]) {
         fetchImage(false);
       }
-      fetchImage(true);
+      if (!cache[id]?.isOriginalSize) {
+        fetchImage(true);
+      }
     })();
   }, [addToCache, cache, id, photo]);
 

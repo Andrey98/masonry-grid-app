@@ -16,7 +16,7 @@ const Photo: FC<{
   const [ref, visible] = useVisibility(0, !!cache[photo.id]);
   const { height, width } = useImageHeight(photo);
 
-  const [imageSrc, setImageSrc] = useState<string | null>(cache[photo.id] || null);
+  const [imageSrc, setImageSrc] = useState<string | null>(cache[photo.id]?.blob || null);
   const [isLoading, setIsLoading] = useState(!cache[photo.id]);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,9 +30,9 @@ const Photo: FC<{
       return;
     }
 
-    if (cache[photo.id]) {
+    if (cache[photo.id]?.isOriginalSize) {
       setIsLoading(false);
-      setImageSrc(cache[photo.id]);
+      setImageSrc(cache[photo.id].blob);
       return;
     }
 
@@ -53,7 +53,7 @@ const Photo: FC<{
         } else {
           if (isOriginal || !cache[photo.id]) {
             setImageSrc(objectURL);
-            addToCache(photo.id, objectURL);
+            addToCache(photo.id, objectURL, isOriginal);
           }
         }
       } catch (err: unknown) {

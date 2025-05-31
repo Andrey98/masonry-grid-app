@@ -2,14 +2,14 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 import { useColumnCountAndWidth } from '../hooks/useColumnCountAndWidth';
 import { API_KEY } from '../constants';
 
-import type { IPhoto, IStore } from '../types';
+import type { ICache, IPhoto, IStore } from '../types';
 
 const StoreContext = createContext<IStore | null>(null);
 
 export const StoreProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const cache = useRef<Record<number, string>>({});
+  const cache = useRef<ICache>({});
   const { count, width } = useColumnCountAndWidth();
   const [photos, setPhotos] = useState<IPhoto[]>(
     new Array(80)
@@ -17,8 +17,8 @@ export const StoreProvider: React.FC<{
       .map((item, i) => ({ ...item, id: i }))
   );
 
-  const addToCache = useCallback((key: number, value: string) => {
-    cache.current[key] = value;
+  const addToCache = useCallback((key: number, value: string, isOriginalSize: boolean) => {
+    cache.current[key] = { blob: value, isOriginalSize };
   }, []);
 
   useEffect(() => {
