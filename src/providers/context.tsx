@@ -29,7 +29,6 @@ export const StoreProvider: React.FC<{
   }, []);
 
   const fetchNextPage = useCallback(() => {
-    console.log(nextPage, loading);
     if (nextPage && !loading) {
       setLoading(true);
       fetch(nextPage, {
