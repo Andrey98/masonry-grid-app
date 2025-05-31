@@ -1,6 +1,6 @@
 import { ScrollRestoration, useParams } from 'react-router';
 import { useStore } from '../../providers/context';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { IPhoto } from '../../types';
 import { API_KEY } from '../../constants';
 import { Skeleton } from '../../components/Skeleton';
@@ -25,6 +25,39 @@ export const PhotoPage = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(cache[id || '']?.blob || null);
   const [error, setError] = useState<string | null>(id ? null : 'Wrong photo ID');
 
+  const fetchImage = useCallback(
+    async (isOriginal: boolean) => {
+      if (!id || !photo) {
+        return;
+      }
+      try {
+        const response = await fetch(isOriginal ? photo.src.original : photo.src.medium);
+        const imageBlob = await response.blob();
+        const objectURL = URL.createObjectURL(imageBlob);
+
+        if (!response.ok) {
+          if (!cache[id]) {
+            throw new Error(`Failed to fetch image.`);
+          }
+        } else {
+          if (isOriginal || !cache[id]) {
+            setImageSrc(objectURL);
+            addToCache(Number(id), objectURL, isOriginal);
+          }
+        }
+      } catch (err: unknown) {
+        if (!cache[id]) {
+          if (err instanceof Error) {
+            setError(err?.message);
+          } else {
+            setError('An unknown error occurred while fetching the image.');
+          }
+        }
+      }
+    },
+    [addToCache, cache, id, photo]
+  );
+
   useEffect(() => {
     if (!id) {
       setError('Photo ID is required');
@@ -46,33 +79,6 @@ export const PhotoPage = () => {
         return;
       }
 
-      const fetchImage = async (isOriginal: boolean) => {
-        try {
-          const response = await fetch(isOriginal ? photo.src.original : photo.src.medium);
-          const imageBlob = await response.blob();
-          const objectURL = URL.createObjectURL(imageBlob);
-
-          if (!response.ok) {
-            if (!cache[id]) {
-              throw new Error(`Failed to fetch image.`);
-            }
-          } else {
-            if (isOriginal || !cache[id]) {
-              setImageSrc(objectURL);
-              addToCache(Number(id), objectURL, isOriginal);
-            }
-          }
-        } catch (err: unknown) {
-          if (!cache[id]) {
-            if (err instanceof Error) {
-              setError(err?.message);
-            } else {
-              setError('An unknown error occurred while fetching the image.');
-            }
-          }
-        }
-      };
-
       setError(null);
       if (!cache[id]) {
         fetchImage(false);
@@ -85,7 +91,7 @@ export const PhotoPage = () => {
         }
       }
     })();
-  }, [addToCache, cache, id, imageSrc, photo]);
+  }, [cache, fetchImage, id, imageSrc, photo]);
 
   if (error) {
     return <div>Error: {error}</div>;

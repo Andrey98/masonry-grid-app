@@ -30,27 +30,8 @@ export const Photo: FC<{
     [photo.isSkeleton]
   );
 
-  useEffect(() => {
-    if (imageSrc || !visible) {
-      return;
-    }
-
-    if (!photo.src.medium) {
-      setIsLoading(false);
-      return;
-    }
-
-    if (cache[photo.id]?.isOriginalSize) {
-      setIsLoading(false);
-      setImageSrc(cache[photo.id].blob);
-      return;
-    }
-
-    setImageSrc(null);
-    setIsLoading(true);
-    setError(null);
-
-    const fetchImage = async (isOriginal: boolean) => {
+  const fetchImage = useCallback(
+    async (isOriginal: boolean) => {
       try {
         const response = await fetch(isOriginal ? photo.src.original : photo.src.medium);
         const imageBlob = await response.blob();
@@ -77,11 +58,33 @@ export const Photo: FC<{
       } finally {
         setIsLoading(false);
       }
-    };
+    },
+    [addToCache, cache, photo.id, photo.src.medium, photo.src.original]
+  );
+
+  useEffect(() => {
+    if (imageSrc || !visible) {
+      return;
+    }
+
+    if (!photo.src.medium) {
+      setIsLoading(false);
+      return;
+    }
+
+    if (cache[photo.id]?.isOriginalSize) {
+      setIsLoading(false);
+      setImageSrc(cache[photo.id].blob);
+      return;
+    }
+
+    setImageSrc(null);
+    setIsLoading(true);
+    setError(null);
 
     fetchImage(false);
     fetchImage(true);
-  }, [photo.src.medium, photo.src.original, imageSrc, visible, photo.id, cache, addToCache]);
+  }, [cache, fetchImage, imageSrc, photo.id, photo.src.medium, visible]);
 
   useEffect(() => {
     if (visible && willTriggerNextPageFetch) {
