@@ -4,6 +4,15 @@ A responsive image gallery application built with React and TypeScript, featurin
 
 ---
 
+## 📊 Lighthouse Report
+
+The project aims for high performance, accessibility, and best practices.
+
+![Lighthouse Scores for Masonry Grid App](public/lighthouse_reports.png)
+_Performance: 97, Accessibility: 100, Best Practices: 100, SEO: 100_
+
+---
+
 ## ✨ Features
 
 - **Masonry Layout:** Displays photos in a dynamic and responsive masonry grid.
