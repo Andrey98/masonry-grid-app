@@ -20,7 +20,7 @@ export const StoreProvider: React.FC<{
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState<IPhoto[]>(
     new Array(PER_PAGE)
-      .fill({ width: 200, height: 300, src: { medium: '' }, isSkeleton: true })
+      .fill({ width: 200, height: 300, src: {}, isSkeleton: true })
       .map((item, i) => ({ ...item, id: i }))
   );
 

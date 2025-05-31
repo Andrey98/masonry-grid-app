@@ -12,8 +12,8 @@ export const StyledDetailViewContainer = styled.div`
 
 export const StyledBackButton = styled(NavLink)`
   align-self: flex-start;
-  background-color: #007bff;
-  color: white;
+  background-color: #ffffff;
+  color: #333333;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -24,7 +24,7 @@ export const StyledBackButton = styled(NavLink)`
   text-decoration: none;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #dddddd;
   }
 `;
 
