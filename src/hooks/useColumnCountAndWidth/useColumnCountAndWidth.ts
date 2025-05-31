@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getColumnsCount } from '../utils/getColumnsCount';
-import { getColumnsWidth } from '../utils/getColumnsWidth';
+import { getColumnsCount } from '../../utils/getColumnsCount/getColumnsCount';
+import { getColumnsWidth } from '../../utils/getColumnsWidth/getColumnsWidth';
 
 type ColumnData = {
   count: number;
@@ -14,7 +14,7 @@ export const useColumnCountAndWidth = () => {
   });
 
   useEffect(() => {
-    let timeoutId: number | null = null;
+    let timeoutId: NodeJS.Timeout | null = null;
     let resizeOccurredInCooldown = false;
 
     const onResize = () => {

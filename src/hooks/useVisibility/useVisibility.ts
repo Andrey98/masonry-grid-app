@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ROOT_MARGIN } from '../constants';
+import { ROOT_MARGIN } from '../../constants';
 
 export const useVisibility = (threshold = 0, isAlreadyInCache = false) => {
   const [visible, setVisible] = useState(isAlreadyInCache);

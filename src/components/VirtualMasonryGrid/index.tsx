@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Photo } from '../Photo';
-import { splitIntoColumns } from '../../utils/splitIntoColumns';
+import { splitIntoColumns } from '../../utils/splitIntoColumns/splitIntoColumns';
 import { useStore } from '../../providers/context';
 import { GAP } from '../../constants';
 

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type FC, type MouseEventHandler } from 'react';
 import { NavLink } from 'react-router';
-import { useVisibility } from '../../hooks/useVisibility';
-import { useImageHeight } from '../../hooks/useImageHeight';
+import { useVisibility } from '../../hooks/useVisibility/useVisibility';
+import { useImageHeight } from '../../hooks/useImageHeight/useImageHeight';
 import { Skeleton } from '../Skeleton';
 import { useStore } from '../../providers/context';
 

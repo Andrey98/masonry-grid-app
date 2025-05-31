@@ -8,7 +8,7 @@ import { StyledHeader, StyledInput, StyledMain } from './styles';
 export const Home = () => {
   const { photos, search, setSearch } = useStore();
   const [inputValue, setInputValue] = useState(search);
-  const timeoutRef = useRef<number>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>(null);
 
   useEffect(() => {
     if (timeoutRef.current) {
@@ -17,6 +17,11 @@ export const Home = () => {
     timeoutRef.current = setTimeout(() => {
       setSearch(inputValue);
     }, 500);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [inputValue, setSearch]);
 
   return (

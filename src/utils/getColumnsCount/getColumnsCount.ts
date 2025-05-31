@@ -1,4 +1,4 @@
-import { BIG_SCREEN, MEDIUM_SCREEN, SMALL_SCREEN } from '../constants';
+import { BIG_SCREEN, MEDIUM_SCREEN, SMALL_SCREEN } from '../../constants';
 
 export const getColumnsCount = () => {
   const width = window.innerWidth;

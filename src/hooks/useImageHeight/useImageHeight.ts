@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useStore } from '../providers/context';
+import { useStore } from '../../providers/context';
 
-import type { IPhoto } from '../types';
+import type { IPhoto } from '../../types';
 
 export const useImageHeight = (photo: IPhoto) => {
   const { columnWidth, columnCount } = useStore();

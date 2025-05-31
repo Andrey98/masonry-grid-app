@@ -4,9 +4,7 @@ export interface IPhoto {
   photographer: string;
   photographer_url: string;
   src: {
-    small: string;
     medium: string;
-    large: string;
     original: string;
   };
   width: number;
@@ -26,8 +24,8 @@ export interface IStore {
   columnCount: number;
   photos: IPhoto[];
   cache: ICache;
+  search: string;
   addToCache: (key: number, value: string, isOriginalSize: boolean) => void;
   fetchNextPage: () => void;
-  search: string;
   setSearch: (value: string) => void;
 }

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useColumnCountAndWidth } from '../hooks/useColumnCountAndWidth';
+import { useColumnCountAndWidth } from '../hooks/useColumnCountAndWidth/useColumnCountAndWidth';
 import { API_KEY, PER_PAGE } from '../constants';
 
 import type { ICache, IPhoto, IResponseData, IStore } from '../types';

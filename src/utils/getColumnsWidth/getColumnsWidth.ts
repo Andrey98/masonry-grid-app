@@ -1,5 +1,5 @@
-import { getColumnsCount } from './getColumnsCount';
-import { GAP, PADDING } from '../constants';
+import { getColumnsCount } from '../getColumnsCount/getColumnsCount';
+import { GAP, PADDING } from '../../constants';
 
 export const getColumnsWidth = () => {
   const columnCount = getColumnsCount();
